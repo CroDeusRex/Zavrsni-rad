@@ -3,16 +3,37 @@ warehouseModule.controller('homeController', function($scope, $http) {
 })
 .controller('warehouseListController', function($scope, $http) {
 
-    $http.get('http://127.0.0.1:8000/warehouse')
-        .then(function (result) {
-            $scope.warehouse = result.data.warehouse;
-        });
+    $data = {"warehouse":
+             [{
+                 "quantity":2,
+                 "min_quantity":0,
+                 "warehouse_entry":1,
+                 "product":
+                 {
+                     "name":"cocacola",
+                     "supplier":"velpro",
+                     "id":1,
+                     "img":"https://pbs.twimg.com/profile_images/493592781575557120/H7R37Fc8_400x400.jpeg"
+                 }},
+              {
+                  "quantity":8,
+                  "min_quantity":4,
+                  "warehouse_entry":2,
+                  "product":
+                  {
+                      "name":"sprite",
+                      "supplier":"jamnica",
+                      "id":2,
+                      "img":"https://pbs.twimg.com/profile_images/493592781575557120/H7R37Fc8_400x400.jpeg"
+                  }}]};
+     
+    //$ar = angular.fromJson($data);
+    $scope.warehouse = $data.warehouse;
 })
 .controller('warehouseEntryEditController', function($scope,$http,$routeParams){
-    $http.get('http://127.0.0.1:8000/warehouses/' + $routeParams.id+ '/item')
-        .then(function(result){
-        $scope.entry = result.data.warehouse[0];
-    });
+    $data = "{warehouse:[{quantity:2,min_quantity:0,warehouse_entry:1,product:{name:cocacola,supplier:velpro,id:1}},{quantity:8,min_quantity:4,warehouse_entry:2,product:{name:sprite,supplier:jamnica,id:2}}]}";     
+    $ar = angular.fromJson($data);
+    $scope.entry = $ar.warehouse[0];
     
     $scope.submit_updatedentry = function()
     {
